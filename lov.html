@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Fern ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+  html, body { height: 100%; margin: 0; padding: 0; overflow: hidden; position: relative; background-color: #ffe4ec; }
+  body { display: flex; justify-content: center; align-items: center; font-family: 'Kanit', sans-serif; text-align: center; background: linear-gradient(-45deg, #ffe4ec, #ffb3c6, #ffc8dd, #ffafcc); background-size: 400% 400%; animation: gradientBG 10s ease infinite; box-sizing: border-box; }
+  @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  
+  /* แก้ไขให้ตัวไอคอนคิตตี้ใช้เป็นอีโมจิแทน เพื่อให้มั่นใจว่าแสดงผลได้ 100% */
+  .kitty-rain { position: fixed; top: -50px; z-index: 10; pointer-events: none; animation: fall linear infinite; font-size: 30px; }
+  @keyframes fall { 0% { transform: translateY(-50px) rotate(0deg); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+  
+  .frame { position: relative; z-index: 20; display: inline-block; border: 5px solid #ff69b4; border-radius: 20px; padding: 40px 30px; background: rgba(255, 255, 255, 0.95); box-shadow: 0 15px 35px rgba(255, 105, 180, 0.3); backdrop-filter: blur(5px); max-width: 400px; width: 90%; animation: fadeIn 0.8s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+  h1 { color: #ff3385; margin-top: 0; margin-bottom: 5px; font-size: 26px; }
+  .sub-text { color: #d14785; font-size: 16px; margin-top: 5px; margin-bottom: 20px; }
+  img.main-gif { max-width: 250px; max-height: 250px; border-radius: 15px; margin-bottom: 20px; }
+  .btn { font-family: 'Kanit', sans-serif; font-size: 18px; font-weight: 600; padding: 12px 25px; margin: 8px; cursor: pointer; border: none; border-radius: 50px; transition: all 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .btn:hover { transform: translateY(-3px) scale(1.05); }
+  .yes { background: linear-gradient(45deg, #ff69b4, #ff1493); color: white; }
+  .no { background-color: #f1f1f1; color: #555; }
+  .next { background: linear-gradient(45deg, #ff9a9e, #fecfef); color: #d14785; }
+  .love { background: linear-gradient(45deg, #ff0000, #ff4d4d); color: white; font-size: 30px !important; padding: 20px 50px; }
+  .credit { position: absolute; bottom: 15px; right: 20px; font-size: 14px; color: #d14785; font-weight: bold; opacity: 0.7; z-index: 20; }
+</style>
+</head>
+<body>
+
+<div class="frame" id="mainFrame"></div>
+<div class="credit">Cr. tp_1092s</div>
+
+<script>
+  // เปลี่ยนมาใช้ Emoji แทนรูปภาพ เพื่อป้องกันปัญหาโหลดไม่ขึ้นครับ
+  function createKittyRain() {
+    const symbols = ['🐱', '🎀', '💖', '🌸', '✨', '🐾'];
+    const drop = document.createElement('div');
+    drop.classList.add('kitty-rain');
+    drop.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+    drop.style.left = Math.random() * 100 + 'vw';
+    drop.style.animationDuration = (Math.random() * 5 + 5) + 's';
+    document.body.appendChild(drop);
+    setTimeout(() => { drop.remove(); }, 10000);
+  }
+  setInterval(createKittyRain, 500);
+
+  let yesBtnSize = 18;
+  let noCount = 0;
+
+  function renderPage(step) {
+    const mainFrame = document.getElementById('mainFrame');
+    mainFrame.style.animation = "none";
+    mainFrame.offsetHeight;
+    mainFrame.style.animation = "fadeIn 0.6s ease";
+
+    const content = [
+      "",
+      `<h1>ฮัลโหลลลล เฟิร์น 🌸</h1><p class="sub-text">แวะมาทักทายคนน่ารักซะหน่อย 👋</p><img class="main-gif" src="https://media.tenor.com/J355L85t54oAAAAM/hello-kitty-wave.gif"><br><button class="btn next" onclick="renderPage(2)">มีอะไรหรอ? 👀</button>`,
+      `<h1>วันนี้เป็นไงบ้าง? ☁️</h1><p class="sub-text">เหนื่อยไหมเอ่ยคนเก่ง 🥺</p><img class="main-gif" src="https://media.tenor.com/2s46zUaT0-4AAAAi/peach-goma-pat.gif"><br><button class="btn no" onclick="renderPage(3)">เหนื่อยยย 🥲</button><button class="btn yes" onclick="renderPage(3)">นิดหน่อยย 🤏</button>`,
+      `<h1>โอ๋ๆ น้าาา 🫂</h1><p class="sub-text">มากอดๆ เติมพลังหน่อยยย เพี้ยงงง! ✨</p><img class="main-gif" src="https://media.tenor.com/1GvK06r4s0wAAAAi/peach-and-goma-hug.gif"><br><button class="btn next" onclick="renderPage(4)">ไปต่อกัน 🚀</button>`,
+      `<h1>จะบอกว่า... 🌻</h1><p class="sub-text">รู้ตัวป่าวว่าเฟิร์นเป็นคนที่ยิ้มแล้วโลกสดใสมาก</p><img class="main-gif" src="https://media1.tenor.com/m/O1aY_f4P_jIAAAAd/peach-and-goma.gif"><br><button class="btn next" onclick="renderPage(5)">จริงง่ะ? 😳</button>`,
+      `<h1>จริงสิ! 💖</h1><p class="sub-text">สดใสขึ้น 3000% เลยนะ เพราะงั้นยิ้มเยอะๆ น้า</p><img class="main-gif" src="https://media.tenor.com/v8b2bWb9RkYAAAAi/peach-goma-love.gif"><br><button class="btn yes" onclick="renderPage(6)">เขินแล้วนะเนี่ย 🥰</button>`,
+      `<h1>อะแฮ่มม.. 🤫</h1><p class="sub-text">เข้าเรื่องดีกว่า คือว่าเค้ามีอะไรอยากจะบอกแหละ</p><img class="main-gif" src="https://media.tenor.com/839X_J-Z8o0AAAAi/peach-goma-shy.gif"><br><button class="btn next" onclick="renderPage(7)">อะไรหรอ? 🤔</button>`,
+      `<h1>แต่ว่านะ... 🥺</h1><p class="sub-text">ก่อนจะบอก ขอถามอะไรหน่อยได้มั้ยยย</p><img class="main-gif" src="https://media.tenor.com/b_8q6j9W_zEAAAAi/peach-goma-think.gif"><br><button class="btn yes" onclick="renderPage(8)">ถามมาเลยยย 👂</button>`,
+      `<h1>เฟิร์นรักเค้าไหม? 💖</h1><p id="sub-text" class="sub-text">ตอบมาจากใจเลยนะ 🥺</p><img id="gif" class="main-gif" src="https://media.tenor.com/76BaX0eo304AAAAj/kitty-kitty-heart.gif"><div id="btnContainer"><button class="btn yes" id="yesBtn" onclick="renderPage(9)">รักสิ 💕</button><button class="btn no" id="noBtn">ไม่อะ 😢</button></div>`,
+      `<h1>งู้ยยยยยย 🎉</h1><p class="sub-text">ดีใจจังงงง! หลับตาก่อน 3 วิ น้าาา 🙈</p><img class="main-gif" src="https://media.tenor.com/5J3P-N89u6sAAAAi/peach-goma-peek.gif"><br><button class="btn yes" onclick="renderPage(10)">หลับตาแล้ววว 🫣</button>`,
+      `<h1>เย่! เค้าก็รักเฟิร์นที่สุดเลยย 🎉</h1><img class="main-gif" src="https://media1.tenor.com/m/qR1sGRNmfqsAAAAC/besito-catlove.gif"><div style="border:3px dashed #ff69b4; border-radius:15px; padding:20px; margin-top:15px; font-size:18px; color:#d14785; background:#fff0f6;"><strong>ถึง เฟิร์นคนเก่ง 💖</strong><br>ขอบคุณที่น่ารักกับเค้าเสมอนะ เค้าจะคอยเป็นกำลังใจและอยู่ข้างๆ เสมอเลยนะ 🥰✨</div><button class="btn next" style="margin-top:20px;" onclick="renderPage(1)">ดูอีกรอบมั้ย 🔁</button>`
+    ];
+
+    mainFrame.innerHTML = content[step];
+
+    if (step === 8) {
+      document.getElementById('noBtn').addEventListener('click', () => {
+        yesBtnSize += 15;
+        document.getElementById('yesBtn').style.fontSize = yesBtnSize + 'px';
+        noCount++;
+        if (noCount >= 5) {
+          document.getElementById('noBtn').remove();
+          document.getElementById('yesBtn').textContent = "Love เท่านั้น ❤️";
+          document.getElementById('yesBtn').classList.add('love');
+        }
+      });
+    }
+    if (step === 10) confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+  }
+
+  renderPage(1);
+</script>
+</body>
+</html>
